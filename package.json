@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node build/server.js",
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch --no-warnings src/server.ts",
     "build": "tsup src --out-dir build"
   },
   "keywords": [],
@@ -13,12 +13,14 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@types/node": "^24.0.13",
-    "tsup": "^8.5.0",
-    "tsx": "^4.20.3",
-    "typescript": "^5.8.3"
+    "@types/node": "18.14.1",
+    "tsup": "6.6.3",
+    "tsx": "3.12.3",
+    "typescript": "4.9.5"
   },
   "dependencies": {
-    "fastify": "^5.4.0"
+    "dotenv": "16.0.3",
+    "fastify": "4.13.0",
+    "zod": "3.20.6"
   }
 }
