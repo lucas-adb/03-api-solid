@@ -8,7 +8,9 @@
     "dev": "tsx watch --no-warnings src/server.ts",
     "build": "tsup src --out-dir build",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +18,8 @@
   "type": "commonjs",
   "devDependencies": {
     "@types/node": "18.14.1",
+    "@vitest/coverage-c8": "0.28.5",
+    "@vitest/ui": "0.28.5",
     "eslint": "8.34.0",
     "prisma": "4.10.1",
     "tsup": "6.6.3",
