@@ -8,6 +8,9 @@ let checkInsRepository: InMemoryCheckInsRepository
 let gymsRepository: InMemoryGymsRepository
 let sut: CheckInUseCase
 
+const LATITUDE_DEFAULT = -16.6970487
+const LONGITUDE_DEFAULT = -49.2452539
+
 describe('Register Use Case', () => {
   beforeEach(() => {
     checkInsRepository = new InMemoryCheckInsRepository()
@@ -19,8 +22,8 @@ describe('Register Use Case', () => {
       title: 'Test Gym',
       description: '',
       phone: '',
-      latitude: new Decimal(0),
-      longitude: new Decimal(0),
+      latitude: new Decimal(LATITUDE_DEFAULT),
+      longitude: new Decimal(LONGITUDE_DEFAULT),
     })
 
     vi.useFakeTimers()
@@ -34,8 +37,8 @@ describe('Register Use Case', () => {
     const { checkIn } = await sut.execute({
       gymId: 'gym-01',
       userId: 'user-01',
-      userLatitude: 0,
-      userLongitude: 0,
+      userLatitude: LATITUDE_DEFAULT,
+      userLongitude: LONGITUDE_DEFAULT,
     })
 
     expect(checkIn.id).toEqual(expect.any(String))
@@ -47,8 +50,8 @@ describe('Register Use Case', () => {
     await sut.execute({
       gymId: 'gym-01',
       userId: 'user-01',
-      userLatitude: 0,
-      userLongitude: 0,
+      userLatitude: LATITUDE_DEFAULT,
+      userLongitude: LONGITUDE_DEFAULT,
     })
 
     await expect(() =>
@@ -67,8 +70,8 @@ describe('Register Use Case', () => {
     await sut.execute({
       gymId: 'gym-01',
       userId: 'user-01',
-      userLatitude: 0,
-      userLongitude: 0,
+      userLatitude: LATITUDE_DEFAULT,
+      userLongitude: LONGITUDE_DEFAULT,
     })
 
     vi.setSystemTime(new Date(2022, 0, 21, 8, 0, 0))
@@ -76,10 +79,30 @@ describe('Register Use Case', () => {
     const { checkIn } = await sut.execute({
       gymId: 'gym-01',
       userId: 'user-01',
-      userLatitude: 0,
-      userLongitude: 0,
+      userLatitude: LATITUDE_DEFAULT,
+      userLongitude: LONGITUDE_DEFAULT,
     })
 
     expect(checkIn.id).toEqual(expect.any(String))
+  })
+
+  it('should not be able to check in on distant gym', async () => {
+    gymsRepository.items.push({
+      id: 'gym-02',
+      title: 'Test Gym',
+      description: '',
+      phone: '',
+      latitude: new Decimal(-16.6130216),
+      longitude: new Decimal(-49.1262881),
+    })
+
+    await expect(() =>
+      sut.execute({
+        gymId: 'gym-02',
+        userId: 'user-01',
+        userLatitude: LATITUDE_DEFAULT,
+        userLongitude: LONGITUDE_DEFAULT,
+      }),
+    ).rejects.toBeInstanceOf(Error)
   })
 })
