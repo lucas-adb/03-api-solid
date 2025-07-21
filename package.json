@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "GymPass style app.",
   "main": "index.js",
+  "node": "18.14.0",
   "scripts": {
     "start": "node build/server.js",
     "dev": "tsx watch --no-warnings src/server.ts",
@@ -29,6 +30,7 @@
     "vitest": "0.28.5"
   },
   "dependencies": {
+    "@fastify/jwt": "6.7.0",
     "@prisma/client": "4.10.1",
     "@rocketseat/eslint-config": "1.2.0",
     "@types/bcryptjs": "2.4.2",
