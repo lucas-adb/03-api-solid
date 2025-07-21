@@ -13,8 +13,6 @@ app.register(fastifyJwt, {
 app.register(appRoutes)
 
 app.setErrorHandler((error, _request, reply) => {
-  console.log('entrou aqui')
-
   if (error instanceof ZodError) {
     return reply.status(400).send({
       message: 'Validation error',
