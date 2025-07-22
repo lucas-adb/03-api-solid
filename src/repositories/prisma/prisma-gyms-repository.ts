@@ -1,7 +1,6 @@
 import { Prisma, Gym } from '@prisma/client'
 import { FindManyNearbyParams, GymsRepository } from '../gyms-repository'
 import { prisma } from '@/lib/prisma'
-import { title } from 'process'
 
 export class PrismaGymsRepository implements GymsRepository {
   async findById(id: string) {
@@ -27,7 +26,7 @@ export class PrismaGymsRepository implements GymsRepository {
     const gyms = await prisma.gym.findMany({
       where: {
         title: {
-          contains: title,
+          contains: query,
         },
       },
       take: 20,
